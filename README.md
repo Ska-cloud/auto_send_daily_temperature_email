@@ -15,7 +15,7 @@
 
 第四步：点击生成的可执行文件（Windows 双击.exe文件，MacOS执行./run.sh，如果不成给文件加可执行权限`sudo chmod 777 run.sh`再运行就可）
 
-## 配置环境
+## 配置环境(所有包都没有强制的版本要求，若下载不成功就下载能用的版本就好)
 `pip install -r requirements.txt`
 ## 百度天气api
 https://lbsyun.baidu.com/apiconsole/key
