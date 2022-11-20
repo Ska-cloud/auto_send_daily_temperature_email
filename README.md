@@ -10,3 +10,7 @@
 https://lbsyun.baidu.com/apiconsole/key
 ## 天行数据api
 https://www.tianapi.com/apiview/174
+
+## 效果图<br/>
+
+![效果图](https://github.com/Ska-cloud/auto_send_daily_temperature_email/blob/main/IMG_0707.GIF)
