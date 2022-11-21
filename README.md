@@ -17,6 +17,8 @@
 
 ## 配置环境(所有包都没有强制的版本要求，若下载不成功就下载能用的版本就好)
 `pip install -r requirements.txt`
+## linux后台挂起运行
+`nohup python run.py 2>nohup.log &`
 ## 百度天气api
 https://lbsyun.baidu.com/apiconsole/key
 ## 天行数据api
