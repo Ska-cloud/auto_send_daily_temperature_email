@@ -1,6 +1,9 @@
 ## 使用说明
 编写config.xml文件：配置发件人信息、收件人信息、每天发邮件的时间，需要自行申请qq邮箱的pop3码。配制好后直接运行<br />
-`python run.py`
+新增支持纪念日计算和生日倒计时
+<br />
+`python run.py`<br />
+所有配置信息只需要修改config.yaml按照我写的格式，若要修改邮件的样式可以修改static/template.html文件
 ## docker部署
 打包镜像：`docker build -t xxx .`<br />
 启动项目：`docker run --name xxx -itd image_id`

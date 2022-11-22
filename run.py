@@ -6,6 +6,8 @@ from email_class.send_email import SendEmail
 from api.tianxing_api import TianXingDataAPI
 from decorator_func.crontab import crontab
 from utils import load_yaml
+from utils import birthday
+from utils import fall_in_love_day
 # from utils.draw import Draw
 
 
@@ -24,6 +26,12 @@ def work():
     # 每日英语
     daily_english = TianXingDataAPI.daily_english()
 
+    # 相恋日期
+    fall_love_day = fall_in_love_day.cal_fall_in_love_days('./config.yaml')
+
+    # 生日日期
+    birthday_day = birthday.cal_birthday_days('./config.yaml')
+
     # 生成邮件模板
     generate_email_template = GenerateEmailTemplate()
     mail_content = generate_email_template.render(
@@ -35,7 +43,9 @@ def work():
         feels_like=weather['feels_like'],
         content=daily_english['content'],
         note=daily_english['note'],
-        # picture=picture_code
+        # picture=picture_code,
+        birthday_day=birthday_day,
+        fall_love_day=fall_love_day
     )
 
     send_email = SendEmail(sender=__sender,
