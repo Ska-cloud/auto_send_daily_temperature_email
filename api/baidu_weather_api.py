@@ -7,11 +7,9 @@ from utils.load_yaml import load_yml
 
 
 class BaiduAPI:
-    AK_TOKEN = ""
+    AK_TOKEN = load_yml('config.yaml').get('ak_token')
 
     def __init__(self, district_id: str):
-        config = load_yml('config.yaml')
-        BaiduAPI.AK_TOKEN = config.get('ak_token')
         self.district_id = district_id
         self.url = f"https://api.map.baidu.com/weather/v1/?district_id={self.district_id}&data_type=all&ak={BaiduAPI.AK_TOKEN}"
 
@@ -46,6 +44,9 @@ class BaiduAPI:
             "feels_like": feels_like,
             'forecasts': content['result']['forecasts']
         }
+
+    def __call__(self):
+        return self.get_today_weather()
 
 
 if __name__ == '__main__':

@@ -7,8 +7,7 @@ from utils.load_yaml import load_yml
 
 
 class TianXingDataAPI:
-    config = load_yml('config.yaml')
-    TOKEN = config.get('tianxing_token')
+    TOKEN = load_yml('config.yaml').get('tianxing_token')
 
     @staticmethod
     def rainbow_boast() -> dict:

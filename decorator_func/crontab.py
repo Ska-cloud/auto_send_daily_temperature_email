@@ -1,20 +1,22 @@
+import functools
+
 import schedule
-from utils.load_yaml import load_yml
 
 
-def crontab(func):
-    config = load_yml('config.yaml')
-    job_time = config.get('do_job_time')
+def crontab(timestamp):
 
-    def inner(*args, **kwargs):
-        # 指定定时器的执行周期
-        schedule.every().day.at(job_time).do(func)
+    def _crontab(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            # 指定定时器的执行周期
+            schedule.every().day.at(timestamp).do(func, *args, **kwargs)
 
-        def register_task():
-            while True:
-                schedule.run_pending()
-                # time.sleep(1)
+            def register_task():
+                while True:
+                    schedule.run_pending()
 
-        return register_task
+            return register_task
 
-    return inner
+        return wrapper
+
+    return _crontab
