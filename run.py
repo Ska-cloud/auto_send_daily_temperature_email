@@ -1,20 +1,17 @@
 import datetime
 
 from api.baidu_weather_api import BaiduAPI
+from email_class import DO_JOB_TIME, DISTRICT_ID, SENDER, RECEIVER, USERNAME, POP_TOKEN
 from email_class.generate_email_template import GenerateEmailTemplate
 from email_class.send_email import SendEmail
 from api.tianxing_api import TianXingDataAPI
 from decorator_func.crontab import crontab
-from utils import load_yaml
 from utils import birthday
 from utils import fall_in_love_day
 # from utils.draw import Draw
 
 
 class Run:
-    config = load_yaml.load_yml('./config.yaml')
-    do_job_time = config.get('do_job_time')
-
     def __init__(self):
         import logging
 
@@ -24,19 +21,12 @@ class Run:
                             format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s')
         self.today_str = datetime.datetime.now().strftime('%Y-%m-%d')
         self.theme = f"{self.today_str}"
-        self.district_id = Run.config.get('district_id')
-        self.sender = Run.config.get('sender')
-        self.receiver = Run.config.get('receiver')
-        self.username = Run.config.get('username')
-        self.pop_token = Run.config.get('pop_token')
-        self.do_job_time = Run.config.get('do_job_time')
-
         print('----------------------自动发送邮件脚本已启动----------------------')
 
-    @crontab(do_job_time)
+    @crontab(DO_JOB_TIME)
     def work(self):
         # 天气信息
-        baidu_api = BaiduAPI(self.district_id)
+        baidu_api = BaiduAPI(DISTRICT_ID)
         weather = baidu_api()
 
         # # 生成气温走势图
@@ -68,19 +58,19 @@ class Run:
             fall_love_day=fall_love_day
         )
 
-        send_email = SendEmail(sender=self.sender,
-                               receiver=self.receiver,
-                               username=self.username,
-                               pop_token=self.pop_token,
+        send_email = SendEmail(sender=SENDER,
+                               receiver=RECEIVER,
+                               username=USERNAME,
+                               pop_token=POP_TOKEN,
                                theme=self.theme)
         # 发送邮件
         result = send_email.send_email(mail_content=mail_content)
 
         # 反馈邮箱对象
-        feedback_email = SendEmail(sender=self.sender,
-                                   receiver=self.sender,
-                                   username=self.username,
-                                   pop_token=self.pop_token,
+        feedback_email = SendEmail(sender=SENDER,
+                                   receiver=SENDER,
+                                   username=USERNAME,
+                                   pop_token=POP_TOKEN,
                                    theme=self.theme)
         if result:
             feedback_email.send_email(f"{self.today_str}, 发送成功")
@@ -88,7 +78,7 @@ class Run:
             feedback_email.send_email(f"{self.today_str}, 发送失败")
 
     def __str__(self):
-        return f"每天{self.do_job_time}，定时发送邮件"
+        return f"每天{DO_JOB_TIME}，定时发送邮件"
 
 
 if __name__ == '__main__':

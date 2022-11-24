@@ -3,16 +3,15 @@ import logging
 
 import requests
 
-from utils.load_yaml import load_yml
+from . import TOKEN
 
 
 class TianXingDataAPI:
-    TOKEN = load_yml('config.yaml').get('tianxing_token')
 
     @staticmethod
     def rainbow_boast() -> dict:
         content = dict()
-        url = f"https://apis.tianapi.com/caihongpi/index?key={TianXingDataAPI.TOKEN}"
+        url = f"https://apis.tianapi.com/caihongpi/index?key={TOKEN}"
         try:
             content = requests.get(url).json()
             logging.info(f"""api_url: {url}, {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}, require rainbow boast success""")
@@ -23,7 +22,7 @@ class TianXingDataAPI:
     @staticmethod
     def daily_english() -> dict:
         content = dict()
-        url = f"https://apis.tianapi.com/everyday/index?key={TianXingDataAPI.TOKEN}"
+        url = f"https://apis.tianapi.com/everyday/index?key={TOKEN}"
         try:
             content = requests.get(url).json()
             logging.info(f"""api_url: {url}, {time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())}, require daily-english success""")

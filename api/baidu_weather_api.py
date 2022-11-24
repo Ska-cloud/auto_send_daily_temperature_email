@@ -3,15 +3,14 @@ import logging
 
 import requests
 
-from utils.load_yaml import load_yml
+from . import AK_TOKEN
 
 
 class BaiduAPI:
-    AK_TOKEN = load_yml('config.yaml').get('ak_token')
 
     def __init__(self, district_id: str):
         self.district_id = district_id
-        self.url = f"https://api.map.baidu.com/weather/v1/?district_id={self.district_id}&data_type=all&ak={BaiduAPI.AK_TOKEN}"
+        self.url = f"https://api.map.baidu.com/weather/v1/?district_id={self.district_id}&data_type=all&ak={AK_TOKEN}"
 
     def get_today_weather(self) -> dict:
         content = dict()
